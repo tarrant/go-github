@@ -7,6 +7,8 @@ package github
 
 import "fmt"
 
+const orgHookPreviewHeader = "application/vnd.github.sersi-preview+json"
+
 // CreateHook creates a Hook for the specified organization.
 // Name and Config are required fields.
 //
@@ -17,6 +19,7 @@ func (s *OrganizationsService) CreateHook(owner string, hook *Hook) (*Hook, *Res
 	if err != nil {
 		return nil, nil, err
 	}
+	req.Header.Set("Accept", orgHookPreviewHeader)
 
 	h := new(Hook)
 	resp, err := s.client.Do(req, h)
@@ -41,6 +44,7 @@ func (s *OrganizationsService) ListHooks(owner string, opt *ListOptions) ([]Hook
 	if err != nil {
 		return nil, nil, err
 	}
+	req.Header.Set("Accept", orgHookPreviewHeader)
 
 	hooks := new([]Hook)
 	resp, err := s.client.Do(req, hooks)
@@ -60,6 +64,7 @@ func (s *OrganizationsService) GetHook(owner string, id int) (*Hook, *Response, 
 	if err != nil {
 		return nil, nil, err
 	}
+	req.Header.Set("Accept", orgHookPreviewHeader)
 	hook := new(Hook)
 	resp, err := s.client.Do(req, hook)
 	return hook, resp, err
@@ -74,6 +79,7 @@ func (s *OrganizationsService) EditHook(owner string, id int, hook *Hook) (*Hook
 	if err != nil {
 		return nil, nil, err
 	}
+	req.Header.Set("Accept", orgHookPreviewHeader)
 	h := new(Hook)
 	resp, err := s.client.Do(req, h)
 	return h, resp, err
@@ -88,6 +94,7 @@ func (s *OrganizationsService) DeleteHook(owner string, id int) (*Response, erro
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", orgHookPreviewHeader)
 	return s.client.Do(req, nil)
 }
 
@@ -100,5 +107,6 @@ func (s *OrganizationsService) TestHook(owner string, id int) (*Response, error)
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Accept", orgHookPreviewHeader)
 	return s.client.Do(req, nil)
 }
